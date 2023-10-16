@@ -14,13 +14,10 @@
 // Necessário para as funções que geram o mapa
 
 
-/*
 
- * a104179 - Sara Lopes
+ // Escolhe uma das salas do mapa, coloca nela um baú e cria uma porta.
 
- * Escolhe uma das salas do mapa, coloca nela um baú e cria uma porta.
 
-*/
 void chest_room(Map** a, int r, int c) {
 	for(int i = 1; i < r-1; i++) {  
 		for(int j = 1; j < c-1; j++) {
@@ -111,13 +108,11 @@ void chest_room(Map** a, int r, int c) {
 	}
 }
 
-/*
 
- * a104179 - Sara Lopes
 
- * Verifica se um elemento existe num array.
+// Verifica se um elemento existe num array.
 
-*/
+
 int elem(Vector2D e, Vector2D *v, int N) {
     int i, ans = 0;
     for(i = 0; i < N && !ans; i++)
@@ -125,13 +120,11 @@ int elem(Vector2D e, Vector2D *v, int N) {
     return ans;
 }
 
-/*
 
- * a104179 - Sara Lopes
 
- * Remove o primeiro elemento de um array.
+// Remove o primeiro elemento de um array.
 
-*/
+
 Vector2D* remove_elem(Vector2D* old, int old_size) {
     if (old == 0 || old_size <= 1) { // verifica se o array antigo tem pelo menos um elemento
 	    return old;
@@ -144,14 +137,11 @@ Vector2D* remove_elem(Vector2D* old, int old_size) {
     return &old[1]; // retorna o ponteiro para o array antigo sem o primeiro elemento
 }
 
-/*
 
- * a104179 - Sara Lopes
 
- * Verifica se um mapa é válido.
- Um mapa válido permite que o jogador acesse a todas as salas do mapa.
+//  Verifica se um mapa é válido. Um mapa válido permite que o jogador acesse a todas as salas do mapa.
 
-*/
+
 int valid_map(Map** a, int r, int c) {
 	Vector2D fst, tmp;
 	int i, count = 0, k = 0;
@@ -232,14 +222,11 @@ int valid_map(Map** a, int r, int c) {
 	else return 1;
 }
 
-/*
 
- * a104179 - Sara Lopes
 
- * Permite a geração de água no mapa.
- Existir água depende da profundidade e da aleatoriedade. A quantidade desta depende apenas da aleatoriedade. 
+// Permite a geração de água no mapa. Existir água depende da profundidade e da aleatoriedade. A quantidade desta depende apenas da aleatoriedade. 
 
-*/
+
 void gen_water(Map** a, int r, int c) {
 	int x = 0, y = 0, water, ind, n = 3, prob_water = 0;
 	if (LEVEL != 0) prob_water = (1/LEVEL)*100;
@@ -306,14 +293,11 @@ void gen_water(Map** a, int r, int c) {
 	}
 }
 
-/*
 
- * a104179 - Sara Lopes
 
- * Permite a geração de relva no mapa.
- Existir relva depende da profundidade e da aleatoriedade. A quantidade desta depende apenas da aleatoriedade. 
+// Permite a geração de relva no mapa. Existir relva depende da profundidade e da aleatoriedade. A quantidade desta depende apenas da aleatoriedade. 
 
-*/
+
 void gen_grass(Map** a, int r, int c) {
 	int x = 0, y = 0, grass = 0, ind, n = 3;
 	int prob_grass = 90 - 10*LEVEL;
@@ -381,14 +365,10 @@ void gen_grass(Map** a, int r, int c) {
 	}
 }
 
-/*
 
- * a104179 - Sara Lopes
+// Permite a geração de lava no mapa. Existir lava depende da profundidade e da aleatoriedade. A quantidade desta depende apenas da aleatoriedade. 
 
- * Permite a geração de lava no mapa.
- Existir lava depende da profundidade e da aleatoriedade. A quantidade desta depende apenas da aleatoriedade. 
 
-*/
 void gen_lava(Map** a, int r, int c) {
 	int x = 0, y = 0, lava = 0, ind, n = 2;
 	int prob_lava = 10 * LEVEL;
@@ -446,15 +426,11 @@ void gen_lava(Map** a, int r, int c) {
 	}
 }
 
-/*
 
- * a104179 - Sara Lopes
 
- * Gera um número aleatório de salas, compreendido entre 15 a 25, num mapa.
- O tamanho das salas é variável.
- Garante que a cada nova sala é aberta uma porta para as salas adjacentes já existentes.
+// Gera um número aleatório de salas, compreendido entre 15 a 25, num mapa. O tamanho das salas é variável.  Garante que a cada nova sala é aberta uma porta para as salas adjacentes já existentes.
 
-*/
+
 void new_room_map (Map** a, int r, int c){
 	srand(time(NULL)); // define a semente baseada no tempo atual
 	int random_rooms = (random() % 11) + 15; // 15 a 25 salas
@@ -592,13 +568,10 @@ void new_room_map (Map** a, int r, int c){
     }
 }
 
-/*
 
-* a104356 - João Lobo
+// Gera diferentes tipos mobs em posições válidas de forma aleatória consoante o nível do mapa.
 
-* Gera diferentes tipos mobs em posições válidas de forma aleatória consoante o nível do mapa.
 
-*/
 int gen_mobs(Mob **mobs, Map **map, int r, int c, int level){
 	// Isto pode servir para fazer um modo dificíl mais tarde, subindo o valor
 	int mobSpawnRate = 1;
@@ -648,13 +621,10 @@ int gen_mobs(Mob **mobs, Map **map, int r, int c, int level){
 	return 0;
 }
 
-/*
 
- * a104179 - Sara Lopes
+ // Abre, entre 1 a 3, portais no mapa, para ser possível nagevar entre níveis. 
 
- * Abre, entre 1 a 3, portais no mapa, para ser possível nagevar entre níveis. 
 
-*/
 void new_level_map (Map** a, int r, int c){
 	int random_num, count = 0, rc, rr;
 
@@ -669,13 +639,9 @@ void new_level_map (Map** a, int r, int c){
 	}
 }
 
-/*
+// Obtém uma posição válida no mapa para colocar entidades/objetos.
 
-* a104356 - João Lobo
 
-* Obtém uma posição válida no mapa para colocar entidades/objetos.
-
-*/
 Vector2D get_random_floor_position(Map** map, int r, int c){
 	int available = 0;
 	Vector2D pos;
@@ -691,14 +657,11 @@ Vector2D get_random_floor_position(Map** map, int r, int c){
 	return pos;
 }
 
-/*
 
- * a104179 - Sara Lopes
 
- * Gera um mapa. Caso este não seja válido, é gerado um novo.
- Um mundo é constituído por 20 mapas.
+// Gera um mapa. Caso este não seja válido, é gerado um novo. Um mundo é constituído por 20 mapas.
 
-*/
+
 void gen_map(Map** a, int r, int c) {
     int count = 0;
 	new_room_map(a,r,c);
@@ -718,13 +681,8 @@ void gen_map(Map** a, int r, int c) {
 	chest_room(a,r,c);
 }
 
-/*
+// Desenha os mobs no mapa consoante o seu tipo.
 
-* a104356 - João Lobo
-
-* Desenha os mobs no mapa consoante o seu tipo.
-
-*/
 void draw_mobs(Mob *mobs, int mobQuantity, Terminal *terminal){
 	for(int i = 0; i < mobQuantity; i++){
 		// Mob skins (depende do tipo de mob)
@@ -743,14 +701,11 @@ void draw_mobs(Mob *mobs, int mobQuantity, Terminal *terminal){
 	}
 }
 
-/*
 
- * a104179, a104439, a104356 - Sara Lopes, Rita Camacho, João Lobo
 
- * O mapa é uma matriz de tipos. Em função de cada tipo é feita a impressão de elementos específicos.
- Exemplo: 1 é parede e imprime "##" na cor escolhida.
+// O mapa é uma matriz de tipos. Em função de cada tipo é feita a impressão de elementos específicos. Exemplo: 1 é parede e imprime "##" na cor escolhida.
 
-*/
+
 void print_map(Map** a, int r, int c, GameState *gameState, Terminal *terminal) {
 	//Image lava = load_image_from_file("assets/sprites/lava.sprite");
 	//int k = 0, r_num = 0;
@@ -814,26 +769,20 @@ void print_map(Map** a, int r, int c, GameState *gameState, Terminal *terminal) 
     }
 }
 
-/*
 
-* a104439 - Rita Camacho
 
-* Sorteia uma cor dentro dum conjunto de várias cores de forma a que certos tipos de terreno (relva, água, lava) tenham várias cores
+// Sorteia uma cor dentro dum conjunto de várias cores de forma a que certos tipos de terreno (relva, água, lava) tenham várias cores
 
-*/
+
 int choose_color(int a, int dif, Vector2D pos){
 	int seed = pos.x * 505 + pos.y * dif;
 	srand(seed);
 	return (a + (rand() % (dif + 1)));
 }
 
-/*
+// Nas salas secretas, para obter o padrão do chão, foi necessário implementar uma função que o criasse.
 
-* a104439 - Rita Camacho
 
-* Nas salas secretas, para obter o padrão do chão, foi necessário implementar uma função que o criasse.
-
-*/
 int create_color_pattern(int a, int dif, Vector2D pos){
 	return (a + (((pos.x * pos.y) + (pos.x * dif) + (pos.x + dif)) % (dif + 1)));
 }
