@@ -3,13 +3,8 @@
 #include "sound.h"
 
 
-/*
+// Função intermédia que adapta a play_sound de forma a ser utilizada na pthread_create.
 
- * a104179 - Sara Lopes
-
- * Função intermédia que adapta a play_sound de forma a ser utilizada na pthread_create.
-
-*/
 void *play_sound_thread(void *arg) {
     Sound *param = (Sound*) arg;
     play_sound(param->filename, param->time_ms, param->loop);
@@ -17,13 +12,8 @@ void *play_sound_thread(void *arg) {
     return NULL;
 }
 
-/*
+// Abre um dispositivo de áudio e reproduz um som. 
 
- * a104179 - Sara Lopes
-
- * Abre um dispositivo de áudio e reproduz um som. 
-
-*/
 void play_sound(const char *filename, int time_ms, int loop){
     SDL_AudioSpec spec; // estrutura com informação do áudio
     Uint8 *audio_buf; // apontador para o buffer de áudio
