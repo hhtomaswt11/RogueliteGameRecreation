@@ -3,13 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/*
 
-* a104356 - João Lobo
-
-* Cria uma imagem através de uma array de pixels.
-
-*/
 Image create_image(int size, Pixel pixels[]) {
     Image image;
     image.size = size;
@@ -19,13 +13,7 @@ Image create_image(int size, Pixel pixels[]) {
     return image;
 }
 
-/*
 
-* a104356 - João Lobo
-
-* Cria uma imagem através de um ficheiro do tipo .sprite.
-
-*/
 Image load_image_from_file(char path[]){
     Image result;
 
