@@ -28,13 +28,9 @@
 
 int LEVEL, num_levels = 20;
 
-/*
+// Cria o estado inicial do jogo.
 
-* a104356 - João Lobo
 
-* Cria o estado inicial do jogo.
-
-*/
 GameState *init_game_state(){
 	GameState *state = malloc(sizeof(GameState));
 	if (state == NULL) {
@@ -54,13 +50,8 @@ GameState *init_game_state(){
 	return state;
 }
 
-/*
+// Recebe inputs do utilizador e executa acções correspondentes (se existirem).
 
-* a104179, a104439, a104356 - Sara Lopes, Rita Camacho, João Lobo
-
-* Recebe inputs do utilizador e executa acções correspondentes (se existirem).
-
-*/
 void execute_input(GameState *state, World *w, int r, int c, Terminal *terminal){
 	int key = getch();
     
@@ -226,13 +217,8 @@ void execute_input(GameState *state, World *w, int r, int c, Terminal *terminal)
 	}
 }
 
-/*
+// Após ser detetado que o jogador quer mudar de nível, gera um novo mapa do mundo mais profundo ou navega para um já existente. 
 
- * a104179 - Sara Lopes
-
- * Após ser detetado que o jogador quer mudar de nível, gera um novo mapa do mundo mais profundo ou navega para um já existente. 
-
-*/
 void check_for_portal(GameState *state, World *w, int r, int c, int dir){
 	if (w[LEVEL].map[state->player.position.y][state->player.position.x].object == 2) { // encontrou um porta, muda de nível e gera um novo mapa
 		if (dir == -1 && LEVEL > 0) {
@@ -261,13 +247,8 @@ void check_for_portal(GameState *state, World *w, int r, int c, int dir){
 	} 
 }
 
-/*
+// Atualiza todas as entidades e elementos do mapa consoante o tempo passado desde o último frame.
 
-* a104356 - João Lobo
-
-* Atualiza todas as entidades e elementos do mapa consoante o tempo passado desde o último frame.
-
-*/
 void update(GameState *state, World *worlds, int r, int c, struct timeval currentTime, Terminal *terminal) {
 	execute_input(state, worlds, r, c, terminal);
 	
@@ -325,13 +306,8 @@ void update(GameState *state, World *worlds, int r, int c, struct timeval curren
 	refresh();
 }
 
-/*
+// Loop principal do programa, responsável por desenhar e atualizar o jogo.
 
-* a104179, a104439, a104356 - Sara Lopes, Rita Camacho, João Lobo
-
-* Loop principal do programa, responsável por desenhar e atualizar o jogo.
-
-*/
 int game(Terminal *terminal, char *playerName) {
 	clear();
 	GameState *gameState = init_game_state();
