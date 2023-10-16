@@ -9,13 +9,6 @@
 // Elementos de UI genéricos, podem ser utilizados por si mesmos ou combinados com outros.
 
 
-/*
-
-* a104356 - João Lobo
-
-* Gera um menu de opções numa dada posição.
-
-*/
 int menu_select(int options, char *texts[], int width, int y, int x){
     int selection = 0, key = 0;
     int lines  = options + 4;
@@ -69,13 +62,7 @@ int menu_select(int options, char *texts[], int width, int y, int x){
     return selection;
 }
 
-/*
 
-* a104356 - João Lobo
-
-* Gera um pop-up de confirmação (y/n).
-
-*/
 int modal_confim(char text[], int width, int screenYMax, int screenXMax){
     int key = 0, option = 0;
     int necessaryLines = count_newlines(text) + 1 + 4;
@@ -132,13 +119,7 @@ int modal_confim(char text[], int width, int screenYMax, int screenXMax){
     return !option;
 }
 
-/*
 
-* a104356 - João Lobo
-
-* Desenha um botão no ecrã, (este componente não inclui a recepção de input).
-
-*/
 void button(short color_gradient[4], char *text, Vector2D pos){
     refresh();
     int textSize = strlen(text);
@@ -165,13 +146,8 @@ void button(short color_gradient[4], char *text, Vector2D pos){
     attroff(COLOR_PAIR(color_gradient[3]+8));
 }
 
-/*
 
-* a104356 - João Lobo
 
-* Desenha uma barra de progresso (usada para UI de vida, oxigênio, etc).
-
-*/
 void progress_bar(int value, int max, int width, short primaryColor, short secondaryColor, char *text, Vector2D pos){
     int posX = (width / 2) - (strlen(text) / 2);
     int textEnd = posX+strlen(text);
@@ -204,13 +180,7 @@ void progress_bar(int value, int max, int width, short primaryColor, short secon
     }
 }
 
-/*
 
-* a104356 - João Lobo
-
-* Cria um pop-up de input de texto. O texto recebido é formatado e suporta alguns caracteres especiais.
-
-*/
 void text_input_box(Vector2D pos, int width, int inputSize, char *text, char *input){
     WINDOW * inputWindow = newwin(5, width, pos.y, pos.x);
     box(inputWindow, 0, 0);
