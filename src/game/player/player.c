@@ -16,13 +16,9 @@
 #include "bomb.h"
 #include "beacon.h"
 
-/*
 
-* a104356 - João Lobo
+// Cria o jogador com as suas características iniciais (recebe o seu nome como argumento).
 
-* Cria o jogador com as suas características iniciais (recebe o seu nome como argumento).
-
-*/
 Player *init_player(char name[15], Vector2D pos){
     Player *player = malloc(sizeof(Player));
     if (player == NULL) {
@@ -52,13 +48,8 @@ Player *init_player(char name[15], Vector2D pos){
     return player;
 }
 
-/*
+// Executa uma ação consoante o item que está a segurar.
 
-* a104356 - João Lobo
-
-* Executa uma ação consoante o item que está a segurar.
-
-*/
 void perform_action(GameState *gameState, World* world){
     int actionType = gameState->player.inventory.items[gameState->player.selectedSlot].type; 
 
@@ -106,13 +97,8 @@ void perform_action(GameState *gameState, World* world){
     }
 }
 
-/*
+// Aplica dano do jogador a um mob.
 
-* a104356 - João Lobo
-
-* Aplica dano do jogador a um mob.
-
-*/
 void apply_damage_to_enemy(int enemyIndex, World *world, int damage){
     Mob *mob = &(world->mobs[enemyIndex]);
 
@@ -123,13 +109,8 @@ void apply_damage_to_enemy(int enemyIndex, World *world, int damage){
     }
 }
 
-/*
+// Aplica movimento do jogador numa dada direção.
 
-* a104179, a104356, a104439 - Sara Lopes, João Lobo, Rita Camacho
-
-* Aplica movimento do jogador numa dada direção.
-
-*/
 void apply_movement(GameState *gameState, Direction facing, Map** map, int r, int c){
     Vector2D newPos = {gameState->player.position.x, gameState->player.position.y};
     switch (facing)
@@ -238,13 +219,8 @@ void apply_movement(GameState *gameState, Direction facing, Map** map, int r, in
 
 }
 
-/*
+// Atualiza temporizador de afogamento caso o jogador esteja na água.
 
-* a104356 - João Lobo
-
-* Atualiza temporizador de afogamento caso o jogador esteja na água.
-
-*/
 void update_drowning(Map **map, GameState *gameState, unsigned long elapsedMicroseconds){
     if(map[gameState->player.position.y][gameState->player.position.x].object == 7){
         gameState->player.timeSinceDrownStart += elapsedMicroseconds;
@@ -253,13 +229,8 @@ void update_drowning(Map **map, GameState *gameState, unsigned long elapsedMicro
     }
 }
 
-/*
+// Desenha a luz.
 
-* a104439 - Rita Camacho
-
-* Desenha a luz.
-
-*/
 void draw_light(GameState *gameState, int r, int c, Map **map, World *world, Terminal *terminal){
     Vector2D pos;
     Image image = load_image_from_file("assets/sprites/shadow.sprite");
@@ -301,13 +272,8 @@ void draw_light(GameState *gameState, int r, int c, Map **map, World *world, Ter
     }
 }
 
-/*
+// Verifica se o jogador está a segurar ou não um Glowstick
 
-* a104439 - Rita Camacho
-
-* Verifica se o jogador está a segurar ou não um Glowstick
-
-*/
 int using_glowstick(GameState *gameState){
     if(strcmp(gameState->player.inventory.items[gameState->player.selectedSlot].name, "Glowstick") == 0){
         return 1;
@@ -317,13 +283,8 @@ int using_glowstick(GameState *gameState){
     }
 }
 
-/*
+// Verifica se uma dada célula se encontra no raio de um beacon (usado para definir as sombras).
 
-* a104356 - João Lobo
-
-* Verifica se uma dada célula se encontra no raio de um beacon (usado para definir as sombras).
-
-*/
 int in_beacon_radius(Vector2D pos, World *world){
     for(int i = 0; i < world->beacons; i++){
         int dx = abs(pos.x - world->beaconLocations[i].x);
@@ -335,13 +296,8 @@ int in_beacon_radius(Vector2D pos, World *world){
     return 0;
 }
 
-/*
+// Elimina a iluminação a partir duma parede, verificando se uma dada célula está escondida por esta.
 
-* a104439 - Rita Camacho
-
-* Elimina a iluminação a partir duma parede, verificando se uma dada célula está escondida por esta.
-
-*/
 int light_before_walls(Vector2D posA, Vector2D posB, int distance, Map** map){
     int dx = abs(posB.x - posA.x);
     int dy = abs(posB.y - posA.y);
@@ -387,13 +343,8 @@ int light_before_walls(Vector2D posA, Vector2D posB, int distance, Map** map){
     return 0;
 }
 
-/*
+// Abre baús, sorteia item e adiciona-o ao inventário.
 
-* a104439 - Rita Camacho
-
-* Abre baús, sorteia item e adiciona-o ao inventário.
-
-*/
 void open_chest(Inventory *inventory){
     int new = pick_random_item(inventory);
     if(new != -1){
@@ -402,13 +353,8 @@ void open_chest(Inventory *inventory){
     }
 }
 
-/*
+// Nova bomba adicionada ao inventário do jogador.
 
-* a104439 - Rita Camacho
-
-* Nova bomba adicionada ao inventário do jogador.
-
-*/
 void new_bomb(Inventory *inventory){
     Item newBomb = globalItems[10];
     add_item(inventory, &newBomb);
