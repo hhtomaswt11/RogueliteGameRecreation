@@ -9,24 +9,12 @@
 #include "enemy_info.h"
 #include "bullet.h"
 
-/*
 
-* a104356 - João Lobo
-
-* Atualiza o timer de um mob consoante os microsegundos que passaram deste a última atualização.   
-
-*/
 void update_timer(Mob *mob, unsigned long elapsedMicroseconds){
     mob->timeSinceLastUpdate += elapsedMicroseconds;
 }
 
-/*
 
-* a104356 - João Lobo
-
-* Responsável pelas decisões dos mobs "estúpidos" tendo em conta o tempo desde a última ação e o estado do jogo.
-
-*/
 void wander_ai(Mob *mob, Player *player, Map** map, int r, int c){
     if(mob->timeSinceLastUpdate > 1000000 ||(mob->chasingPlayer && mob->timeSinceLastUpdate > 250000)){
         mob->timeSinceLastUpdate = 0;
@@ -74,13 +62,8 @@ void wander_ai(Mob *mob, Player *player, Map** map, int r, int c){
     }
 }
 
-/*
 
-* a104356 - João Lobo
 
-* Responsável pelas decisões dos mobs "inteligentes" tendo em conta o tempo desde a última ação e o estado do jogo.
-
-*/
 void tactical_ai(Mob *mob, Player *player, Map** map, World *world){
     if(mob->timeSinceLastUpdate > 1000000 ||(mob->chasingPlayer && mob->timeSinceLastUpdate > 250000)){
         mob->timeSinceLastUpdate = 0;
@@ -100,13 +83,7 @@ void tactical_ai(Mob *mob, Player *player, Map** map, World *world){
     }
 }
 
-/*
 
-* a104356 - João Lobo
-
-* Remove mob do mapa e lipa a memória alocada.
-
-*/
 void remove_enemy_from_world(World *world, int enemyIndex){
     if(world->mobQuantity > 1){
         world->mobs[enemyIndex] = world->mobs[world->mobQuantity - 1];
@@ -121,13 +98,7 @@ void remove_enemy_from_world(World *world, int enemyIndex){
     world->mobQuantity--;
 }
 
-/*
 
-* a104356 - João Lobo
-
-* Ataque corpo a corpo dos mobs tendo em conta o nivel de dano do mob.
-
-*/
 void apply_damage(Mob *mob, Player *player){
     // Se o mob estiver a uma distância suficiente de ataque, ataca o player
     if(distance_between_points(mob->position, player->position) <= 1.5f){
@@ -135,13 +106,8 @@ void apply_damage(Mob *mob, Player *player){
     }
 }
 
-/*
 
-* a104356 - João Lobo
 
-* Obtem a próxima posição ideal para alcançar alvo de patrulha.
-
-*/
 Vector2D get_next_patrol_path_position(Vector2D pos, Vector2D target){
     Vector2D newPos = {0,0};
     if(pos.x > target.x){
@@ -168,24 +134,12 @@ Vector2D get_next_patrol_path_position(Vector2D pos, Vector2D target){
     return pos;
 }
 
-/*
 
-* a104356 - João Lobo
-
-* Cálculo da distância entre duas posições.
-
-*/
 float distance_between_points(Vector2D a, Vector2D b){
     return sqrt( (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) );
 }
 
-/*
 
-* a104356 - João Lobo
-
-* Algoritmo de Bresenham em C. Traça um linha de um ponto ao outro e verifica célula a célula se a linha é interrompida.
-
-*/
 int can_see_location(Vector2D posA, Vector2D posB, int distance, Map** map){
     int dx = abs(posB.x - posA.x);
     int dy = abs(posB.y - posA.y);
@@ -230,13 +184,8 @@ int can_see_location(Vector2D posA, Vector2D posB, int distance, Map** map){
     return 0;
 }
 
-/*
 
-* a104356 - João Lobo
 
-* Escolhe uma nova posição de patrulha.
-
-*/
 Vector2D pick_random_patrol_position(Vector2D pos, Map **map){
     // Primeiro, escolhe uma direção aleatória
     Direction direction = random() % 4;
@@ -270,13 +219,9 @@ Vector2D pick_random_patrol_position(Vector2D pos, Map **map){
     }
 }
 
-/*
 
-* a104356 - João Lobo
 
-* Cálcula quantas "casas" um mob pode andar numa dada direção.
 
-*/
 int available_floor_in_direction(Vector2D pos, Map **map, Direction direction){
     int distance = 0;
     switch (direction)
