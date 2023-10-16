@@ -4,13 +4,9 @@
 #include <ncurses.h>
 #include "engine_types.h"
 
-/*
 
-* a104356 - João Lobo
 
-* Carrega as cores em hexadecimal de um ficheiro palette e adiciona às cores do ncurses.
 
-*/
 int load_palette_from_file(char *path, Terminal *terminal){
     FILE* file = fopen(path, "r");
 
@@ -50,13 +46,9 @@ int load_palette_from_file(char *path, Terminal *terminal){
     return 1;
 }
 
-/*
 
-* a104356 - João Lobo
 
-* Adiciona uma cor à palette interna do ncurses.
 
-*/
 int add_color_to_palette(Color color, short index){
     short red = (color.red * 1000.0) / 255.0;
     short green = (color.green * 1000.0) / 255.0; 
@@ -66,13 +58,8 @@ int add_color_to_palette(Color color, short index){
     return 0;
 }
 
-/*
 
-* a104356 - João Lobo
 
-* Transforma um valor em hexadecimal para uma struct cor (valores r, g, b).
-
-*/
 Color hex_to_color(char hex[]){
     Color color;
     char red[] = {hex[1],hex[2]};
@@ -84,13 +71,7 @@ Color hex_to_color(char hex[]){
     return color;
 }
 
-/*
 
-* a104356 - João Lobo
-
-* Utilitário para passar valores hexadecimais de dois dígitos com letras maiusculas para um inteiro.
-
-*/
 int two_hexadecimal_to_int(char hex[]){
    
     int result = 0;
