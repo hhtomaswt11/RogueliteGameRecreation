@@ -8,13 +8,8 @@
 #include "components.h"
 #include "about_menu.h"
 
-/*
+// Entrypoint da aplicação. Inicia o ncurses e SDL2.
 
-* a104179, a104356, a104439 - Sara Lopes, João Lobo, Rita Camacho
-
-* Entrypoint da aplicação. Inicia o ncurses e SDL2.
-
-*/
 int main(){
     // Setup do ncurses
     WINDOW *window = initscr();
