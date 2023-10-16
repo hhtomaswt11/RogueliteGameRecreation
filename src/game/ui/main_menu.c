@@ -16,7 +16,9 @@
 */
 int main_menu(Terminal *terminal){
     int selection = -1;
-    while(selection == -1){
+
+
+ while(selection == -1){
 
         // Título
         Image image = load_image_from_file("assets/sprites/main_menu/title.sprite");
@@ -30,15 +32,20 @@ int main_menu(Terminal *terminal){
         // Input de seleção
         char *options[] = {"PLAY", "ABOUT", "QUIT"};
         selection = main_menu_update(3, options, terminal->xMax - 12, terminal->yMax - 9, 5, terminal);
-        
-        if(selection == 2){
-            // Confirmação no caso de saída
-            if(modal_confim("Are you sure you want to quit the game?", 45, terminal->yMax, terminal->xMax)){
+          // numero de opcoes, array de strings com os textos, largura e ponteiro para a struct Terminal
+
+if(selection == 2){ 
+
+        // Confirmação no caso de saída
+         if(modal_confim("Are you sure you want to quit the game?", 45, terminal->yMax, terminal->xMax)){
                 return selection;
             }
             selection = -1;
         }
-    }
+
+
+}
+
 
     return selection;
 }
@@ -51,6 +58,7 @@ int main_menu(Terminal *terminal){
 
 */
 int main_menu_update(int options, char *texts[], int width, int y, int x, Terminal *terminal){
+
     int selection = 0, key = 0;
     int lines  = options + 4;
 
@@ -73,7 +81,7 @@ int main_menu_update(int options, char *texts[], int width, int y, int x, Termin
 
     nodelay(selectWindow, TRUE);
 
-    while (key != 10)
+while (key != 10)
     {
         struct timeval now;
         gettimeofday(&now, NULL);
@@ -155,9 +163,34 @@ int main_menu_update(int options, char *texts[], int width, int y, int x, Termin
 
 */
 void create_sparkles_animation(Vector2D pos, int frame, Terminal *terminal){
-    char location[50];
+// posicao onde a animaçao de brilhos sera desenhada na janela
+// numero do quadro da animaçao de brilhos
+// ponteiro para a struct Terminal onde contem informaçoes sobre a janela principa do jogo
+ 
+char location[50];
+
+
     sprintf(location, "assets/sprites/main_menu/sparkles/%d.sprite", frame);
+// formata o caminho do arquivo 
+
+
     Image frameImage = load_image_from_file(location);
+    // carrega a imagem do quadro da animaçao a partir do caminho especificado em location
     draw_to_window(terminal->mainWindow, frameImage, pos);
+// desenha a imagem do quadro da animacao na janela principal do jogo
+
     wrefresh(terminal->mainWindow);
+// atualiza a janela principal do jogo apos o desenho da animaçao 
 }
+
+
+
+
+
+
+
+
+
+
+
+

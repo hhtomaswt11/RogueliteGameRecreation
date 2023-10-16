@@ -18,42 +18,64 @@
 
 */
 int new_items_pop_up(char text[], int width, int screenYMax, int screenXMax){
+// texto a ser exibido na tela
+// largura da janela pop up
+// dimensoes maximas da tela
 
     int key = 0, option = 0;
-    int necessaryLines = count_newlines(text) + 1 + 4 + 1;
+    int necessaryLines = count_newlines(text) + 1 + 4 + 1; // calculo das linhas necessarias tendo em conta o numero de quebras de linha
+    // 1 para a linha do texto, 4 para as linhas de borda da janela, 1 para a linha do botao OK 
+
     int posY = (screenYMax - necessaryLines) / 2;
     int posX = (screenXMax - width) / 2;
+// posicoes da janela pop up para o CENTRO da tela 
 
-    WINDOW * newItemsWindow = newwin(necessaryLines, width, posY, posX);
-    box(newItemsWindow, 0, 0);
-    refresh();
-    wrefresh(newItemsWindow);
-    keypad(newItemsWindow, true);
 
-    mvwprintw(newItemsWindow, 1, 2, "%s", text);
+
+
+    WINDOW *newItemsWindow = newwin(necessaryLines, width, posY, posX); // cria janela
+    box(newItemsWindow, 0, 0); // cria borda ao redor da janela
+    refresh(); // atualiza a tela
+    wrefresh(newItemsWindow); // exibe janela
+    keypad(newItemsWindow, true); // ativa entrada de teclas do teclado
+
+
+mvwprintw(newItemsWindow, 1, 2, "%s", text); // texto impresso na posicao (1,2)
     
     if(LEVEL % 5 == 0){
         mvwprintw(newItemsWindow, 2, 2, "New bomb unlocked!");
     }
+// se o inteiro for divisivel por 5, é exibida a mensagem em (2,2)
 
-    while(key != 10){
-        if(!option){
-            wattron(newItemsWindow, A_BOLD);
+
+
+
+while(key != 10){ // 10 representa a tecla ENTER
+
+    if(!option){
+            wattron(newItemsWindow, A_BOLD); 
             mvwprintw(newItemsWindow, necessaryLines - 2, width - 5, "OK!");
             wattroff(newItemsWindow, A_BOLD);
         }
 
-        key = wgetch(newItemsWindow);
-        switch (key)
+key = wgetch(newItemsWindow); // aguarda a entrada do usuario e captura a tecla pressionada 
+
+
+    switch (key)
         {
             case KEY_UP:
+
                 if(option){
                     option--;
                 } else {
                     option++;
                 }
                 break;
+
+
+
             case KEY_DOWN:
+
                 if(option){
                     option--;
                 } else {
@@ -62,13 +84,22 @@ int new_items_pop_up(char text[], int width, int screenYMax, int screenXMax){
                 break;
             default:
                 break;
-        }
-    }
 
-    wclear(newItemsWindow);
-    wrefresh(newItemsWindow);
-    delwin(newItemsWindow);
-    return !option;
+
+
+        }  // loop para que usuario possa navegar pelas opcoes da janela pop up com as telcas up e down 
+
+
+}
+
+
+
+    wclear(newItemsWindow); // limpa a janela pop up
+    wrefresh(newItemsWindow); // atualiza a tela
+    delwin(newItemsWindow); // destrui a janela pop up 
+
+
+return !option;
 }
 
 /*
@@ -81,17 +112,17 @@ int new_items_pop_up(char text[], int width, int screenYMax, int screenXMax){
 int winner_pop_up(char text[], int width, int screenYMax, int screenXMax, Terminal *terminal){
 
     int key = 0, option = 0;
-    int necessaryLines = count_newlines(text) + 1 + 4 + 1;
-    int posY = (screenYMax - necessaryLines) / 2;
-    int posX = (screenXMax - width) / 2;
+    int necessaryLines = count_newlines(text) + 1 + 4 + 1; // numero de linhas necessarias para exibir o pop up 
+    int posY = (screenYMax - necessaryLines) / 2; // centralizar na tela 
+    int posX = (screenXMax - width) / 2; // centralizar na tela 
 
-    WINDOW * winnerWindow = newwin(necessaryLines, width, posY, posX);
-    box(winnerWindow, 0, 0);
-    refresh();
-    wrefresh(winnerWindow);
-    keypad(winnerWindow, true);
+    WINDOW *winnerWindow = newwin(necessaryLines, width, posY, posX); // janela winnerWindow que recebe a janela criada no terminal a partir de nwewin
+    box(winnerWindow, 0, 0); // borda ao redor da janela 
+    refresh(); // atualiza a pagina // toda a tela padrao
+    wrefresh(winnerWindow); // atualiza apenas a janela winnerWindow 
+    keypad(winnerWindow, true); // ativa a entrada de teclado 
 
-    mvwprintw(winnerWindow, 1, 2, "%s", text);
+    mvwprintw(winnerWindow, 1, 2, "%s", text); // imrpime o texto 
 
     while(key != 10){
         
@@ -100,6 +131,7 @@ int winner_pop_up(char text[], int width, int screenYMax, int screenXMax, Termin
         wattroff(winnerWindow, A_BOLD);
 
         key = wgetch(winnerWindow);
+
         switch (key)
         {
             case KEY_UP:
@@ -128,6 +160,7 @@ int winner_pop_up(char text[], int width, int screenYMax, int screenXMax, Termin
 
     clear();
     refresh();
+    
     int selection = main_menu(terminal);
 
     while(selection == 0 || selection == 1 || selection == 3){
@@ -182,11 +215,11 @@ int game_over_pop_up(char text[], int width, int screenYMax, int screenXMax, Ter
     int posY = (screenYMax - necessaryLines) / 2;
     int posX = (screenXMax - width) / 2;
 
-    WINDOW * gameOverWindow = newwin(necessaryLines, width, posY, posX);
+    WINDOW *gameOverWindow = newwin(necessaryLines, width, posY, posX);
     box(gameOverWindow, 0, 0);
     refresh();
     wrefresh(gameOverWindow);
-    keypad(gameOverWindow, true);
+    keypad(gameOverWindow, true); 
 
     mvwprintw(gameOverWindow, 1, 2, "%s", text);
 
@@ -196,7 +229,8 @@ int game_over_pop_up(char text[], int width, int screenYMax, int screenXMax, Ter
         mvwprintw(gameOverWindow, necessaryLines - 2, width - 12, "TRY AGAIN!");
         wattroff(gameOverWindow, A_BOLD);
 
-        key = wgetch(gameOverWindow);
+        key = wgetch(gameOverWindow); // aguarda a entrada do usuario que retorna o codigo ascii da tecla pressionada 
+
         switch (key)
         {
             case KEY_UP:
@@ -218,17 +252,20 @@ int game_over_pop_up(char text[], int width, int screenYMax, int screenXMax, Ter
         }
     }
 
-    wclear(gameOverWindow);
-    wrefresh(gameOverWindow);
-    delwin(gameOverWindow);
-    endwin();
+    wclear(gameOverWindow); // limpa a janela do pop up 
+    wrefresh(gameOverWindow); // atualiza a tela
+    delwin(gameOverWindow); // exclui a janela 
+    endwin(); // finaliza o modo de terminal 
 
-    clear();
-    refresh();
-    int selection = main_menu(terminal);
+    clear(); // limpa a tela
+    refresh(); // atualiza a tela 
 
-    while(selection == 0 || selection == 1 || selection == 3){
-        switch (selection){
+    int selection = main_menu(terminal); // main_menu para exibir no terminal 
+
+while(selection == 0 || selection == 1 || selection == 3){
+
+
+    switch (selection){
         case 0:
             {
                 Vector2D inputPos = {terminal->xMax / 2 - 15, terminal->yMax / 2};
@@ -236,7 +273,7 @@ int game_over_pop_up(char text[], int width, int screenYMax, int screenXMax, Ter
                 text_input_box(inputPos, 30, 15, "Insert your name:", playerName);
                 clear();
                 refresh();
-                game(terminal, playerName);
+                game(terminal, playerName); // inicia um novo jogo 
                 clear();
             }
             break;
@@ -253,15 +290,21 @@ int game_over_pop_up(char text[], int width, int screenYMax, int screenXMax, Ter
                 refresh();
             }
             break;
+
+
         default:
             break; 
         }
-        selection = main_menu(terminal);
-    }
-    endwin();
-    exit(0);
 
-    return !option;
+    selection = main_menu(terminal); // exibe no terminal 
+
+    }
+    endwin(); // finaliza o modo terminal
+    exit(0); // sai do programa 
+
+    return !option;// retorna 0 se option for diferente de 0 
+                // retorna 1 se option for igual a 0 
+                // usado para saber se o jogador deseja jogar novamente ou nao 
 }
 
 /*
