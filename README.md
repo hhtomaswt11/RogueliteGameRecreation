@@ -3,8 +3,8 @@
 
 
 (Ano letivo 2022/2023). 
-Avaliado com 
-##             19/20
+
+##             19/20 valores
 
 Este jogo foi desenvolvido por Tomás Melo (A104529), João Lobo (A104356), Rita Camacho (A104439) e Sara Lopes (A104179), alunos que frequentam atualmente a Licenciatura de Engenharia Informática na Universidade do Minho, Braga. Este projeto enquadra-se na unidade curricular Laboratórios de Informática II do 1º ano 2º semestre.
 
